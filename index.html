@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>storeblue</title>
+    <style>
+      body {
+        font-family: Poppins;
+        margin: 0;
+        background: #fff8f0;
+      }
+
+      header {
+        background: #4d53ff;
+        color: white;
+        padding: 1em 2em;
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+      }
+
+      header img {
+        height: 90px;
+        margin-bottom: 10px;
+      }
+
+      nav a {
+        text-decoration: none;
+        font-weight: 600;
+        color: #dee3e2;
+      }
+
+      nav a:hover {
+        background-color: #020b87; /* Warna latar belakang saat dihover */
+        color: white; /* Warna teks saat dihover */
+      }
+
+      main {
+        padding: 30px;
+      }
+
+      .produk-container {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .produk {
+        background: rgb(33, 158, 196);
+        border-radius: 10px;
+        padding: 20px;
+        width: 260px;
+        box-shadow: 0 4px 12px rgba(21, 154, 216, 0.82);
+        text-align: center;
+      }
+
+      .produk img {
+        max-width: 100%;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .produk h3 {
+        margin-top: 10px;
+      }
+
+      .produk .harga {
+        color: #08456c;
+        font-weight: bold;
+      }
+
+      .jumlah-beli {
+        margin-top: 8px;
+        font-size: 14px;
+        color: #110bc0;
+      }
+
+      button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background: #4d9dff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #3777d7;
+      }
+
+      footer {
+        text-align: center;
+        padding: 15px;
+        background: #222;
+        color: white;
+        margin-top: 40px;
+      }
+
+      .keranjang-section {
+        background: #fff4f4;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 40px;
+        display: none;
+      }
+
+      .ikon-keranjang {
+        font-size: 28px;
+        cursor: pointer;
+        position: relative;
+        margin-left: 20px;
+        align-self: center;
+        transition: transform 0.3s ease;
+      }
+
+      .ikon-keranjang:hover {
+        transform: scale(1.2);
+      }
+
+      #keranjang-count {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: red;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        border-radius: 50%;
+        padding: 3px 7px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: rgb(26, 121, 216);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      th,
+      td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f8d7da;
+      }
+
+      .kosong {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 18px;
+        color: #129de3;
+      }
+
+      #kontak {
+        padding: 40px;
+        background: #fff0f0;
+        text-align: center;
+      }
+      .card {
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: space-around;
+        margin-top: 30px;
+      }
+      .title {
+        width: 100%;
+        height: 60px;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>STOREBLUE</h1>
+      <nav>
+        <a onclick="scrollToTop()">Beranda</a>
+        <a onclick="scrollToMenu()">Menu</a>
+        <a onclick="scrollToKeranjang()">Keranjang</a>
+        <a onclick="scrollToKontak()">Kontak</a>
+      </nav>
+      <div
+        class="ikon-keranjang"
+        onclick="scrollToKeranjang()"
+        title="Lihat Keranjang"
+      >
+        🛒<span id="keranjang-count">0</span>
+      </div>
+    </header>
+
+    <main id="menu">
+      <h2 style="text-align: center"></h2>
+      <div class="produk-container">
+        <!-- Produk 1 -->
+        <div class="produk" data-produk="jaket gopcore">
+          <img src="Gambar/produk/Jaket.png" alt="Jaket Gopcore" />
+          <h3>JAKET GOPCORE PERSIB</h3>
+          <p>Material berkualitas, nyaman di dalam dan luar ruangan.</p>
+          <div class="harga">Rp 329.000</div>
+          <p class="jumlah-beli" id="jumlah-jaket-gopcore">Jumlah dibeli: 0</p>
+          <button onclick="beliProduk('jaket gopcore', 329000)">
+            🛒 Beli via WhatsApp
+          </button>
+        </div>
+        <!-- Produk 2 -->
+        <div class="produk" data-produk="topi persib">
+          <img src="Gambar/produk/Topi.png" alt="Topi Persib" />
+          <h3>TOPI PERSIB</h3>
+          <p>Desain dual-tone, nyaman dikenakan siapa pun.</p>
+          <div class="harga">Rp 139.000</div>
+          <p class="jumlah-beli" id="jumlah-topi-persib">Jumlah dibeli: 0</p>
+          <button onclick="beliProduk('topi persib', 139000)">
+            🛒 Beli via WhatsApp
+          </button>
+        </div>
+        <!-- Produk 3 -->
+        <div class="produk" data-produk="jersey persib">
+          <img src="Gambar/produk/Jersey.png" alt="Jersey Persib" />
+          <h3>JERSEY PERSIB</h3>
+          <p>Menyerap keringat, cocok untuk pecinta bola sejati.</p>
+          <div class="harga">Rp 399.000</div>
+          <p class="jumlah-beli" id="jumlah-jersey-persib">Jumlah dibeli: 0</p>
+          <button onclick="beliProduk('jersey persib', 399000)">
+            🛒 Beli via WhatsApp
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- BAGIAN KERANJANG -->
+    <div id="keranjang" class="keranjang-section">
+      <h2>Keranjang Belanja</h2>
+      <div id="keranjangContainer"></div>
+      <div style="text-align: right; margin-top: 20px">
+        <button onclick="checkoutWhatsApp()" style="background: #258ad3">
+          🛒 Checkout via WhatsApp
+        </button>
+      </div>
+    </div>
+
+    <div id="kontak">
+      <h2>Kontak storeblue</h2>
+      <p>📍 Jl. Gatot Subroto No. 289, Bandung</p>
+      <p>📞 0858-6048-7293</p>
+      <p>📧 mutiarajikro@gmail.com</p>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Toko Biru. All Rights Reserved - Mutiara Ajikro</p>
+    </footer>
+
+    <script>
+      function beliProduk(nama, harga) {
+        const produk = { nama, harga };
+        let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+        keranjang.push(produk);
+        localStorage.setItem("keranjang", JSON.stringify(keranjang));
+        updateJumlahProduk();
+        tampilkanKeranjang();
+        document
+          .getElementById("keranjang")
+          .scrollIntoView({ behavior: "smooth" });
+
+        const nomorWA = "6285860487293";
+        const pesan = `Halo Admin, saya ingin membeli produk:\n\nProduk: ${nama}\nHarga: Rp ${harga.toLocaleString()}\nJumlah: 1\n\nTerima kasih.`;
+        window.open(
+          `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`,
+          "_blank"
+        );
+      }
+
+      function updateJumlahProduk() {
+        const keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+        const count = {};
+        keranjang.forEach((item) => {
+          count[item.nama] = (count[item.nama] || 0) + 1;
+        });
+
+        Object.keys(count).forEach((nama) => {
+          const id = `jumlah-${nama.replace(/\s+/g, "-").toLowerCase()}`;
+          const el = document.getElementById(id);
+          if (el) el.textContent = `Jumlah dibeli: ${count[nama]}`;
+        });
+
+        document.getElementById("keranjang-count").textContent =
+          keranjang.length;
+      }
+
+      function tampilkanKeranjang() {
+        const keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+        const container = document.getElementById("keranjangContainer");
+        if (keranjang.length === 0) {
+          container.innerHTML = '<p class="kosong">Keranjang masih kosong</p>';
+          document.getElementById("keranjang-count").textContent = "0";
+          return;
+        }
+
+        let total = 0;
+        let html = `
+        <table>
+          <thead>
+            <tr><th>Produk</th><th>Harga</th><th>Aksi</th></tr>
+          </thead>
+          <tbody>
+      `;
+
+        keranjang.forEach((item, index) => {
+          html += `
+          <tr>
+            <td>${item.nama}</td>
+            <td>Rp${item.harga.toLocaleString()}</td>
+            <td><button onclick="hapusItem(${index})">🗑️ Hapus</button></td>
+          </tr>
+        `;
+          total += item.harga;
+        });
+
+        html += `
+          </tbody>
+          <tfoot>
+            <tr><td>Total Item</td><td colspan="2">${keranjang.length}</td></tr>
+            <tr><td>Total Harga</td><td colspan="2">Rp${total.toLocaleString()}</td></tr>
+          </tfoot>
+        </table>
+      `;
+
+        container.innerHTML = html;
+      }
+
+      function hapusItem(index) {
+        let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+        keranjang.splice(index, 1);
+        localStorage.setItem("keranjang", JSON.stringify(keranjang));
+        tampilkanKeranjang();
+        updateJumlahProduk();
+      }
+
+      function checkoutWhatsApp() {
+        const keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+        if (keranjang.length === 0) {
+          alert("Keranjang masih kosong.");
+          return;
+        }
+
+        let pesan = "*Halo, saya ingin memesan:*\n";
+        let total = 0;
+        keranjang.forEach((item, i) => {
+          pesan += `${i + 1}. ${
+            item.nama
+          } - Rp${item.harga.toLocaleString()}\n`;
+          total += item.harga;
+        });
+        pesan += `\n*Total Item:* ${
+          keranjang.length
+        }\n*Total Harga:* Rp${total.toLocaleString()}`;
+
+        const nomorWA = "6285860487293";
+        window.open(
+          `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`,
+          "_blank"
+        );
+      }
+
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      function scrollToMenu() {
+        document.getElementById("menu").scrollIntoView({ behavior: "smooth" });
+      }
+      function scrollToKeranjang() {
+        document
+          .getElementById("keranjang")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+      function scrollToKontak() {
+        document
+          .getElementById("kontak")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      window.onload = () => {
+        updateJumlahProduk();
+        tampilkanKeranjang();
+      };
+    </script>
+  </body>
+</html>
